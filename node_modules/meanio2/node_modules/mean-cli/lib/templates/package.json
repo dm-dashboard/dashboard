@@ -1,0 +1,14 @@
+{
+  "name": "__pkgName__",
+  "version": "0.0.1",
+  "description": "Some description of __pkgName__",
+  "author": {
+    "name": "__author__"
+  },
+  "mean": "__version__",
+  "dependencies": {},
+  "license": "MIT",
+  "scripts": {
+    "postinstall" : "bower install"
+  }
+}

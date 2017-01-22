@@ -1,0 +1,239 @@
+/*NEW SLIDER STYLES FOR SCALE, ETC*/
+
+/* slider widget */
+
+.ui-slider {
+    text-decoration: none !important;
+}
+.ui-slider .ui-slider-handle {
+    overflow: visible !important;
+}
+.ui-slider .ui-slider-tooltip {
+    display: none;
+}
+.ui-slider .ui-state-active .ui-slider-tooltip,
+.ui-slider .ui-state-focus .ui-slider-tooltip,
+.ui-slider .ui-state-hover .ui-slider-tooltip {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    padding: .2em;
+    font-size: .9em;
+    width: 14em;
+    /*width: auto;*/
+    margin-left: -4em;
+}
+.ui-slider a {
+    text-decoration: none;
+}
+.ui-slider ol,
+.ui-slider li,
+.ui-slider dl,
+.ui-slider dd,
+.ui-slider dt {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.ui-slider ol,
+.ui-slider dl {
+    position: relative;
+    top: 1.3em;
+    width: 100%;
+}
+.ui-slider dt {
+    top: 1.5em;
+    position: absolute;
+    padding-top: .2em;
+    text-align: center;
+    border-bottom: 1px dotted #ddd;
+    height: .7em;
+    color: #999;
+}
+.ui-slider dt span {
+    background: #fff;
+    padding: 0 .5em;
+}
+.ui-slider li,
+.ui-slider dd {
+    position: absolute;
+    overflow: visible;
+    color: #666;
+}
+.ui-slider li span.ui-slider-label,
+.ui-slider dd span.ui-slider-label {
+    display: none;
+}
+.ui-slider li span.ui-slider-label-show,
+.ui-slider dd span.ui-slider-label-show {
+    display: block;
+}
+.ui-slider span.ui-slider-tic {
+    position: absolute;
+    left: 0;
+    height: .8em;
+    top: -1.3em;
+}
+.ui-slider li span.ui-widget-content,
+.ui-slider dd span.ui-widget-content {
+    border-right: 0;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-top: 0;
+    border-bottom: 0;
+}
+.ui-slider .first .ui-slider-tic,
+.ui-slider .last .ui-slider-tic {
+    display: none;
+}
+.slider {
+    margin-bottom: 50px;
+    width: 95%;
+    float: left;
+}
+.slider.sleep {
+    background: #a3e5f4;
+}
+.slider-controller {
+    padding-top: 0;
+}
+.slider-controller select {
+    width: 100px;
+}
+.ui-slider-handle.minimum,
+a[data-temperature="minimum"],
+.ui-slider-range.minimum {
+    background: #a3e5f4;
+}
+.ui-slider-handle.saving,
+a[data-temperature="saving"],
+.ui-slider-range.saving {
+    background: #f2e079;
+}
+.ui-slider-handle.comfort,
+a[data-temperature="comfort"],
+.ui-slider-range.comfort {
+    background: #e6a235;
+}
+.ui-slider-handle.sleep,
+a[data-temperature="sleep"],
+.ui-slider-range.sleep {
+    background: #a3e5f4;
+}
+.ui-slider-handle.leave,
+a[data-temperature="leave"],
+.ui-slider-range.leave {
+    background: #f2e079;
+}
+.ui-slider-handle.return,
+a[data-temperature="return"],
+.ui-slider-range.return {
+    background: #e6a235;
+}
+.ui-slider-handle.wake,
+a[data-temperature="wake"],
+.ui-slider-range.wake {
+    background: #e96223;
+}
+
+
+.ui-slider-handle.page1,
+.ui-slider-range.page1 {
+    background: #a3e5f4;
+}
+
+.ui-slider-handle.page2,
+.ui-slider-range.page2 {
+    background: #e96223;
+}
+
+.ui-slider-handle.page3,
+.ui-slider-range.page3 {
+    background: #f2e079;
+}
+
+.ui-slider-handle.page4,
+.ui-slider-range.page4 {
+    background: #e6a235;
+}
+
+.ui-slider-handle.page5,
+.ui-slider-range.page5 {
+    background: #e96223;
+}
+
+.ui-slider-handle.page6,
+.ui-slider-range.page6 {
+    background: #a3e5f4;
+}
+
+.ui-slider-handle.page7,
+.ui-slider-range.page7 {
+    background: #f2e079;
+}
+
+.ui-slider-handle.page8,
+.ui-slider-range.page8 {
+    background: #e6a235;
+}
+
+
+
+.temperature-wake {
+    background-color: #e96223;
+    color: #fff;
+}
+.temperature-leave {
+    background-color: #f2e079;
+}
+.temperature-return {
+    background-color: #e6a235;
+    color: #fff;
+}
+.temperature-sleep {
+    background-color: #a3e5f4;
+}
+.temperatures input {
+    text-align: right;
+}
+.slider-tick-mark-main {
+    display: inline-block;
+    width: 1px;
+    background: #bbb;
+    height: 7px;
+    position: absolute;
+    top: 15px;
+    font-size: 11px;
+}
+.slider-tick-mark-main-text {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    position: absolute;
+    top: 25px;
+    font-size: 11px;
+    text-align: center;
+    margin-left: -9px;
+}
+.slider-tick-mark-side {
+    display: inline-block;
+    width: 1px;
+    background: #ccc;
+    height: 5px;
+    position: absolute;
+    top: 15px;
+}
+.slider-tick-mark-side-text {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    position: absolute;
+    top: 25px;
+    font-size: 9px;
+    text-align: center;
+    margin-left: -9px;
+}
+.slider span.ui-slider-tooltip {
+    width: auto;
+}

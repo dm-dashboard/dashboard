@@ -1,0 +1,42 @@
+
+.at-multirange-slider {
+  height: 1em;
+  padding-top: .5em;
+}
+
+.at-multirange-slider .slider {
+  height: 2px;
+}
+
+.at-multirange-slider .slider-range {
+  
+  box-sizing: border-box;
+  display: inline-block;
+  
+  vertical-align: top;
+  height: 2px;
+}
+
+.at-multirange-slider .slider-handle {
+  z-index: 100;
+  margin-top: -.5em;
+  height: 1em;
+  border: 1px solid #133;
+  border-radius: 2px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.at-multirange-slider .slider-handle:hover {
+  background: #ddd;
+}
+
+.at-multirange-slider .slider-range:last-child .slider-handle{
+    display: none;
+}
+
+.at-multirange-slider .slider-label {
+  text-align: center;
+  padding-top: .25em;
+  font-size: .75em;
+}

@@ -1,0 +1,145 @@
+<style>
+    li input {
+        width: 30px;
+    }
+
+    .switch-label {
+        text-align: left !important;
+    }
+
+    .modal-lg {
+        width:1120px;
+    }
+
+</style>
+
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Dashboard: {{modal.currentDashboard.name}}</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="switch-label col-sm-3 control-label">Dashboard name:</label>
+
+                    <div class="col-sm-3">
+                        <input class="form-control" ng-model="modal.currentDashboard.name"/>
+                    </div>
+                </div>
+            </form>
+            <h4>Pages & Widgets</h4>
+
+            <div class="dashboard-mockup pull-left">
+                <div gridster="modal.gridsterOpts">
+                    <ul>
+                        <li style="background-color: {{modal.colors[$index]}}" gridster-item="item"
+                            ng-repeat="item in modal.widgetsForPage()" ng-class="{removeField : 'modal.widget.removed'}">
+                            <div class="widget-mockup">
+                                <div class="remove-widget" ng-click="modal.removeWidget(item)">X</div>
+                                <div class="widget-name">{{item.name}}</div>
+                                <div class="edit-widget" ng-show="item.sizeX >= 9 && item.sizeY >= 10">
+                                    <table>
+                                        <tr>
+                                            <td>Width</td>
+                                            <td><input ng-model="item.sizeX"/></td>
+                                            <td>Height</td>
+                                            <td><input ng-model="item.sizeY"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Row</td>
+                                            <td><input ng-model="item.row"/></td>
+                                            <td>Column</td>
+                                            <td><input ng-model="item.col"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                Widget Config:
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <textarea ng-model="item.config"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                {{item.directive}}
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="pull-left widget-controls" style="padding-left:20px">
+                <h4>Add Widget</h4>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Plugin</label>
+
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-model="modal.selectedPlugin"
+                                    ng-options="plugin.display for plugin in modal.plugins">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Widget</label>
+
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-model="modal.selectedWidget"
+                                    ng-options="widget.name for widget in modal.pluginWidgets">
+                            </select>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary" ng-click="modal.addWidget()" ng-disabled="!modal.selectedWidget">Add Selected
+                        Widget</a>
+
+                    <div>
+                        {{modal.selectedWidget.description}}
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <div>Note: Widget config must be valid JSON. Please use " instead of '. All field names must be
+                        quoted.
+                    </div>
+                    <br/>
+
+                    <div>If you can't see the config box, make the widget wider. You can make it narrow again after
+                        setting
+                        the
+                        config.
+                    </div>
+                </form>
+
+            </div>
+            <div class="clearfix"></div>
+            <div style="margin-top:10px">
+                <div>Page {{modal.selectedPage+1}} of {{modal.currentDashboard.pages.length}}</div>
+                <div class="btn-group">
+                    <a class="btn btn-default" ng-click="modal.changePage(-1)">&lt;</a>
+                    <a class="btn btn-default" ng-click="modal.changePage(1)">&gt;</a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-default" ng-click="modal.addPage()">Add Page</a>
+                    <a class="btn btn-default" ng-click="modal.removePage()">Remove Current Page</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="modal.save()" ng-disabled="!modal.currentDashboard.name">Save</button>
+        <button class="btn btn-warning" ng-click="modal.cancel()">Cancel</button>
+    </div>
+</div>

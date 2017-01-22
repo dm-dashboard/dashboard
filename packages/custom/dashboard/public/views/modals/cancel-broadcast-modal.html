@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h3 class="modal-title">Cancel Broadcast</h3>
+</div>
+<div class="modal-body">
+    Do you want to cancel broadcast starting at '{{modal.broadcast.startTime | date:'yyyy-MM-dd HH:mm'}}'?
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="modal.ok()">Yes</button>
+    <button class="btn btn-warning" ng-click="modal.cancel()">No</button>
+</div>
