@@ -6,7 +6,8 @@ This was originally built as part of the [Entelect](http://www.entelect.co.za) "
 
 Although originally built for software development teams, there is nothing stopping it's use in other industries and areas.
 
-[TODO: Add screenshot]
+![](readme_images\DashboardScreenshot.png)
+
 
 ## Features
 
@@ -18,6 +19,10 @@ Although originally built for software development teams, there is nothing stopp
 4. Broadcasts: Force specified clients to display a temporary dashboard to broadcast a message for a set time period (This feature is still a work in progress)
 5. Client control dashboard allowing remote control of connected clients machines, allowing you to identify them, change their active dashboard or force-reload them.
 6. Plugin architecture - Endless possibilities. If you have a system that exposes an API, it can be added to your dashboard with a custom plugin.
+
+![](readme_images\DashboardScreenshot_admin.png)
+
+![](readme_images\DashboardScreenshot_client.png)
 
 ## Architecture
 
