@@ -56,7 +56,8 @@ Some things that I would like to see happen:
 - Remove the dependency on mean.io, it was helpful to get plugability quickly during the origianl contest, but it also contains a lot of overhead and unnecessary complexity. I think a plain old node/express (or some other backend framework) with custom plugin code would be much easier to maintain
 - Upgrade to a new version of node
 - Remove the need to check-in the node_modules folder, this is partly due to the age of the system as some of its indirect dependencies (via mean.io) have changed substantially and a fresh install would break the system.
-- Much simple installation process that doesn't require a git clone
+- Much simpler installation process that doesn't require a git clone
+- Lightweight client (less Javascript and animations) option for Raspberry Pi type clients connected to TVs 
 
 
 If you find it useful, please consider contributing to modernizing it and getting it cleaned up and easier to maintain.
