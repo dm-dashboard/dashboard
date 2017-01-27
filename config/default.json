@@ -1,4 +1,10 @@
 {
+    "plugins" : {
+        "location" : "./dev-plugins",
+        "enabled" : [
+            "teamcity"
+        ]
+    },
     "server": {
         "port" : 4000
     },

@@ -72,3 +72,4 @@ modules/views/
 
 logs/*
 bin/
+dev-plugins/
