@@ -1,13 +1,31 @@
 //Test mock plugin
 
 class TeamcityPlugin {
-    init(socket, logger, mongo, scheduler, watchdog) {
+
+    constructor(socket, logger, mongo, scheduler, watchdog) {
+        this.name = 'teamcity';
+        this.defaultSettings = {
+            servers: [
+                {
+                    name: 'Default',
+                    path: 'http://123'
+                }
+            ]
+        };
         this.socket = socket;
         this.logger = logger;
         this.mongo = mongo;
         this.scheduler = scheduler;
         this.watchdog = watchdog;
-        logger.info('init');
+    }
+
+    init(settings) {
+        this.settings = settings;
+        this.logger.info('init');
+        this.settings.get()
+            .then(dbSettings => {
+                this.logger.debug(dbSettings);
+            })
     }
 
     shutdown() {
@@ -15,5 +33,4 @@ class TeamcityPlugin {
     }
 }
 
-module.exports = new TeamcityPlugin();
-
+module.exports = TeamcityPlugin;

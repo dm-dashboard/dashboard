@@ -1,3 +1,4 @@
+import { SettingsGetter, SettingsGetterFactory } from './SettingsGetter';
 import { Scheduler } from './Scheduler';
 import { AppLogger, ILogger } from './AppLogger';
 import { WatchDog } from './WatchDog';
@@ -13,6 +14,7 @@ export class PluginManager {
 
     private loadedPlugins: Map<string, IPlugin> = new Map();
     private logger: ILogger;
+    private settingsGetterFactory: SettingsGetterFactory;
 
     constructor(private config: Configuration, private appLogger: AppLogger,
         private mongo: MongoConnection, private watchdog: WatchDog,
@@ -26,6 +28,7 @@ export class PluginManager {
             throw new Error('Plugin directory does not exist, please correct in the config file\n plugins.location');
         }
         this.logger = appLogger.fork('plugin-manager');
+        this.settingsGetterFactory = new SettingsGetterFactory(this.logger, this.mongo);
     }
 
 
@@ -33,6 +36,9 @@ export class PluginManager {
         let location = path.resolve(this.config.plugins.location);
         this.logger.info(`Loading plugins from [${location}]`);
         this.config.plugins.enabled.forEach(plugin => this.loadPlugin(plugin));
+        for (let plugin of this.loadedPlugins.values()) {
+            plugin.init(this.settingsGetterFactory.getInstance(plugin));
+        };
     }
 
     loadPlugin(name: string) {
@@ -41,14 +47,15 @@ export class PluginManager {
         if (!fs.existsSync(mainScript)) {
             throw new Error(`[${name}] could not be loaded - [${mainScript}] does not exist`);
         }
-        let pluginInstance = require(mainScript) as IPlugin;
-        pluginInstance.init(this.socketManager, this.appLogger.fork(`plugin-${name}`), this.mongo, this.scheduler, this.watchdog);
+        let pluginClass = require(mainScript);
+        let pluginInstance = new pluginClass(this.socketManager, this.appLogger.fork(`plugin-${name}`),
+            this.mongo, this.scheduler, this.watchdog) as IPlugin;
         this.loadedPlugins.set(name, pluginInstance);
     }
 
     shutdown() {
         this.logger.info('Shutting down');
-        for (let plugin of this.loadedPlugins.values()){
+        for (let plugin of this.loadedPlugins.values()) {
             plugin.shutdown();
         };
     }

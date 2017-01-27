@@ -11,9 +11,9 @@
     "logging": {
         "path" : "logs",
         "toConsole" : true,
-        "level" : "info"
+        "level" : "debug"
     },
     "mongo": {
-        "url" : ""
+        "url" : "mongodb://localhost:27017/dashboard"
     }
 }
