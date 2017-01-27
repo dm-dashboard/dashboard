@@ -1,7 +1,7 @@
-import { AppLogger } from './AppLogger';
+import { ILogger} from './AppLogger';
 import { Configuration } from '../config/Configuration';
 export class Scheduler {
-    constructor(private config: Configuration, private logger: AppLogger) {
+    constructor(private config: Configuration, private logger: ILogger) {
 
     }
 

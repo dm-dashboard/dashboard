@@ -2,7 +2,7 @@
   "name": "dm-dashboard",
   "version": "2.0.0",
   "description": "Dashboard",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {},
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@ import * as winston from 'winston';
 import { Configuration } from '../config/Configuration';
 import * as winstonDailyRotate from 'winston-daily-rotate-file';
 const padFunction = require('right-pad');
-const tagWidth = 10;
+const tagWidth = 15;
 
 export interface ILogger {
     info(message: string);

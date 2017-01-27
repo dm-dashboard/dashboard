@@ -6,5 +6,5 @@ import { Scheduler } from './Scheduler';
 
 export interface IPlugin {
     init(socketManager: SocketManager, logger: ILogger, mongo: MongoConnection, scheduler: Scheduler, watchdog: WatchDog);
-    dispose();
+    shutdown();
 }

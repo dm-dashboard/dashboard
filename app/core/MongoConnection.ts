@@ -1,11 +1,11 @@
-import {AppLogger} from './AppLogger';
+import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 export class MongoConnection {
-    constructor(private config: Configuration, private logger : AppLogger) {
-        
+    constructor(private config: Configuration, private logger: ILogger) {
+
     }
 
-    close(){
-
+    close() {
+        this.logger.info('Closing connection');
     }
 }

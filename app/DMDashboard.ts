@@ -28,14 +28,14 @@ export class DMDashboard {
             this.logger = new AppLogger(this.config);
             this.logger.info(`DM-Dashboard starting up. Loading Settings for ENV=${this.config.environment}`);
 
-            this.mongo = new MongoConnection(this.config, this.logger);
+            this.mongo = new MongoConnection(this.config, this.logger.fork('mongo'));
 
-            this.webServer = new WebServer(this.config, this.logger);
+            this.webServer = new WebServer(this.config, this.logger.fork('express'));
             this.webServer.start();
 
-            this.scheduler = new Scheduler(this.config, this.logger);
-            this.watchDog = new WatchDog(this.config, this.logger);
-            this.socketManager = new SocketManager(this.config, this.logger);
+            this.scheduler = new Scheduler(this.config, this.logger.fork('scheduler'));
+            this.watchDog = new WatchDog(this.config, this.logger.fork('watchdog'));
+            this.socketManager = new SocketManager(this.config, this.logger.fork('socket-manager'));
 
             this.pluginManager = new PluginManager(this.config, this.logger, this.mongo, this.watchDog, this.scheduler, this.socketManager);
             this.pluginManager.load();
@@ -47,10 +47,10 @@ export class DMDashboard {
             return;
         }
 
-        this.logger.info('All components started, kicking off scheduler'); 
+        this.logger.info('All components started, kicking off scheduler');
         this.scheduler.start()
             .catch((error) => this.logger.error(error))
-            .then(() => this.shutdown);
+            .then(() => this.shutdown());
 
     }
 

@@ -1,10 +1,10 @@
-import {AppLogger} from './AppLogger';
-import {Configuration} from '../config/Configuration';
+import { ILogger } from './AppLogger';
+import { Configuration } from '../config/Configuration';
 export class SocketManager {
-    constructor(private config: Configuration, private logger : AppLogger) {
+    constructor(private config: Configuration, private logger: ILogger) {
     }
 
-    shutdown(){
-
+    shutdown() {
+        this.logger.info('Shutting down');
     }
 }

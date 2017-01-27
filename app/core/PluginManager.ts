@@ -1,7 +1,7 @@
 import { Scheduler } from './Scheduler';
+import { AppLogger, ILogger } from './AppLogger';
 import { WatchDog } from './WatchDog';
 import { MongoConnection } from './MongoConnection';
-import { AppLogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 import { SocketManager } from './SocketManager';
 import { IPlugin } from './IPlugin';
@@ -11,9 +11,10 @@ import * as fs from 'fs';
 
 export class PluginManager {
 
-    loadedPlugins: IPlugin[] = [];
+    private loadedPlugins: Map<string, IPlugin> = new Map();
+    private logger: ILogger;
 
-    constructor(private config: Configuration, private logger: AppLogger,
+    constructor(private config: Configuration, private appLogger: AppLogger,
         private mongo: MongoConnection, private watchdog: WatchDog,
         private scheduler: Scheduler, private socketManager: SocketManager) {
         let location = config.plugins.location;
@@ -24,6 +25,7 @@ export class PluginManager {
         if (!fs.existsSync(location)) {
             throw new Error('Plugin directory does not exist, please correct in the config file\n plugins.location');
         }
+        this.logger = appLogger.fork('plugin-manager');
     }
 
 
@@ -40,11 +42,14 @@ export class PluginManager {
             throw new Error(`[${name}] could not be loaded - [${mainScript}] does not exist`);
         }
         let pluginInstance = require(mainScript) as IPlugin;
-        pluginInstance.init(this.socketManager, this.logger.fork(name), this.mongo, this.scheduler, this.watchdog);
-        this.loadedPlugins[name] = pluginInstance;
+        pluginInstance.init(this.socketManager, this.appLogger.fork(`plugin-${name}`), this.mongo, this.scheduler, this.watchdog);
+        this.loadedPlugins.set(name, pluginInstance);
     }
 
     shutdown() {
-        this.loadedPlugins.forEach(plugin => plugin.dispose());
+        this.logger.info('Shutting down');
+        for (let plugin of this.loadedPlugins.values()){
+            plugin.shutdown();
+        };
     }
 }
