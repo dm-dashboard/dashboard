@@ -1,29 +1,46 @@
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-            // Name of configuration; appears in the launch configuration drop down menu.
-            "name": "Dashboard",
-            // Type of configuration. Possible values: "node", "mono".
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
             "type": "node",
-            // Workspace relative or absolute path to the program.
-            "program": "${workspaceRoot}/server.js",
-            // Automatically stop program after launch.
+            "request": "launch",
+            "program": "${workspaceRoot}/app/index.ts",
             "stopOnEntry": false,
-            // Command line arguments passed to the program.
-            "args": ["--singleProcess"],
-            // Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
-            "cwd": "${workspaceRoot}/",
-            // Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
             "runtimeExecutable": null,
-            // Optional arguments passed to the runtime executable.
-            "runtimeArgs": [],
-            // Environment variables passed to the program.
-            "env": { },
-            // Use JavaScript source maps (if they exist).
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                
+            },
+            "console": "internalConsole",
+            "sourceMaps" : true,
+            "outDir" : "${workspaceRoot}/bin"
+        },
+        {
+            "name": "Attach",
+            "type": "node",
+            "request": "attach",
+            "port": 5858,
+            "address": "localhost",
+            "restart": false,
             "sourceMaps": false,
-            // If JavaScript source maps are enabled, the generated code is expected in this directory.
+            "outDir": null,
+            "localRoot": "${workspaceRoot}",
+            "remoteRoot": null
+        },
+        {
+            "name": "Attach to Process",
+            "type": "node",
+            "request": "attach",
+            "processId": "${command.PickProcess}",
+            "port": 5858,
+            "sourceMaps": false,
             "outDir": null
-        }, 
-	]
+        }
+    ]
 }

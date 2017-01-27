@@ -1,0 +1,13 @@
+{
+    "server": {
+        "port" : 4000
+    },
+    "logging": {
+        "path" : "logs",
+        "toConsole" : true,
+        "level" : "info"
+    },
+    "mongo": {
+        "url" : ""
+    }
+}
