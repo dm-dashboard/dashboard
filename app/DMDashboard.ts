@@ -60,13 +60,16 @@ export class DMDashboard {
 
     }
 
-    shutdown() {
-        this.logger.info('Shutting down');
-        this.pluginManager.shutdown();
-        this.watchDog.shutdown();
-        this.socketManager.shutdown();
-        this.mongo.close();
-        this.webServer.shutdown();
-        this.logger.info('Shutting down complete');
+    shutdown(): Promise<any> {
+        return new Promise((resolve) => {
+            this.logger.info('Shutting down');
+            this.pluginManager.shutdown();
+            this.watchDog.shutdown();
+            this.socketManager.shutdown();
+            this.mongo.close();
+            this.webServer.shutdown();
+            this.logger.info('Shutting down complete');
+            resolve();
+        });
     }
 }

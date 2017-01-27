@@ -1,3 +1,12 @@
 import { DMDashboard } from './DMDashboard';
 
-new DMDashboard().start();
+
+let dashboard = new DMDashboard();
+
+process.on('SIGTERM', function () {
+    console.log('SIG');
+    dashboard.shutdown()
+        .then(() => process.exit(0));
+});
+
+dashboard.start();

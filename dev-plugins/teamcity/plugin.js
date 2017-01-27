@@ -19,13 +19,17 @@ class TeamcityPlugin {
         this.watchdog = watchdog;
     }
 
+    refresh() {
+        this.settings.get()
+            .then(dbSettings => {
+                this.logger.debug('Tick');
+            });
+    }
+
     init(settings) {
         this.settings = settings;
         this.logger.info('init');
-        this.settings.get()
-            .then(dbSettings => {
-                this.logger.debug(dbSettings);
-            })
+        this.scheduler.registerCallback(this.refresh,this, 5000);
     }
 
     shutdown() {
