@@ -1,11 +1,10 @@
-import { IPlugin } from './IPlugin';
 import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 
 class ScheduledItem {
 
     private timer: NodeJS.Timer;
-    constructor(private interval: number, private context: IPlugin, private callback: () => {}) {
+    constructor(private interval: number, private context: any, private callback: () => void) {
 
     }
 
@@ -35,7 +34,7 @@ export class Scheduler {
         });
     }
 
-    registerCallback(callback: () => {}, context: IPlugin, interval: number) {
+    registerCallback(callback: () => void, context: any, interval: number) {
         this.schedule.push(new ScheduledItem(interval, context, callback));
     }
 

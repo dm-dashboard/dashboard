@@ -47,10 +47,15 @@ export class PluginManager {
         if (!fs.existsSync(mainScript)) {
             throw new Error(`[${name}] could not be loaded - [${mainScript}] does not exist`);
         }
-        let pluginClass = require(mainScript);
+        let pluginClass = require(mainScript) as IPlugin;
         let pluginInstance = new pluginClass(this.socketManager, this.appLogger.fork(`plugin-${name}`),
-            this.mongo, this.scheduler, this.watchdog) as IPlugin;
+            this.mongo, this.scheduler, this.watchdog.registerPlugin(name));
         this.loadedPlugins.set(name, pluginInstance);
+    }
+
+    restartPlugin(name: string) {
+        let plugin = this.loadedPlugins.get(name);
+        plugin.init(this.settingsGetterFactory.getInstance(plugin));
     }
 
     shutdown() {

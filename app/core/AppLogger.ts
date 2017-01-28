@@ -64,14 +64,14 @@ export class AppLogger implements ILogger {
 
 
     info(message: string, tag?: string) {
-        this.logger.info(`[${tag ? tag : this.coreTag}] ${JSON.stringify(message)}`);
+        this.logger.info(`[${tag ? tag : this.coreTag}]  ${typeof message === 'string' ? message : JSON.stringify(message)}`);
     }
 
     debug(message: string, tag?: string) {
-        this.logger.debug(`[${tag ? tag : this.coreTag}] ${JSON.stringify(message)}`);
+        this.logger.debug(`[${tag ? tag : this.coreTag}] ${typeof message === 'string' ? message : JSON.stringify(message)}`);
     }
 
     error(message: string, tag?: string, error?: any) {
-        this.logger.error(`[${tag ? tag : this.coreTag}] ${JSON.stringify(message)}`, error);
+        this.logger.error(`[${tag ? tag : this.coreTag}] ${typeof message === 'string' ? message : JSON.stringify(message)}`, error);
     }
 }

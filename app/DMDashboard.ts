@@ -4,7 +4,7 @@ import { WatchDog } from './core/WatchDog';
 import { Scheduler } from './core/Scheduler';
 import { Configuration } from './config/Configuration';
 import { AppLogger } from './core/AppLogger';
-import { WebServer } from './WebServer';
+import { WebServer } from './core/WebServer';
 import { MongoConnection } from './core/MongoConnection';
 
 export class DMDashboard {
@@ -36,14 +36,14 @@ export class DMDashboard {
                     this.webServer.start();
 
                     this.scheduler = new Scheduler(this.config, this.logger.fork('scheduler'));
-                    this.watchDog = new WatchDog(this.config, this.logger.fork('watchdog'));
+                    this.watchDog = new WatchDog(this.config, this.logger.fork('watchdog'), this.scheduler);
                     this.socketManager = new SocketManager(this.config, this.logger.fork('socket-manager'));
 
                     this.pluginManager = new PluginManager(this.config, this.logger, this.mongo,
                         this.watchDog, this.scheduler, this.socketManager);
                     this.pluginManager.load();
 
-                    this.watchDog.start();
+                    this.watchDog.start(this.pluginManager);
 
                     this.logger.info('All components started, kicking off scheduler');
                     this.scheduler.start()

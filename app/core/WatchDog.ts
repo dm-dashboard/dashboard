@@ -1,12 +1,54 @@
-import { AppLogger, ILogger } from './AppLogger';
+import { PluginManager } from './PluginManager';
+import { Scheduler } from './Scheduler';
+import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
+import * as moment from 'moment';
+
+const watchdogTimeout = 5;
+const checkInterval = 10;
+
+export interface IWatchdogKicker {
+    (): void;
+}
+
 export class WatchDog {
-    constructor(private config: Configuration, private logger: ILogger) {
+    private lastKicks: Map<string, moment.Moment> = new Map();
+    private pluginManager: PluginManager;
+
+    constructor(private config: Configuration, private logger: ILogger,
+        private scheduler: Scheduler) {
 
     }
 
-    start() {
+    start(pluginManager: PluginManager) {
+        this.scheduler.registerCallback(() => this.checkForDeadPlugins(), this, checkInterval * 1000);
+        this.pluginManager = pluginManager;
+    }
 
+    registerPlugin(name: string): IWatchdogKicker {
+        this.lastKicks.set(name, moment());
+        return () => this.lastKicks.set(name, moment());
+    }
+
+    private checkForDeadPlugins() {
+        let allOK = true;
+        let now = moment();
+        this.logger.debug('Watchdog is keeping an eye on:');
+
+        for (let pluginName of this.lastKicks.keys()) {
+            let secondsSinceLastKick = now.diff(this.lastKicks.get(pluginName), 'seconds');
+            this.logger.debug(`\t${pluginName} (last kick was ${secondsSinceLastKick} seconds ago)`);
+            if (secondsSinceLastKick >= watchdogTimeout) {
+                this.logger.error(`${pluginName} has not kicked the watchdog in ${secondsSinceLastKick} seconds, restarting`);
+                this.pluginManager.restartPlugin(pluginName);
+                this.lastKicks.set(pluginName, moment());
+                allOK = false;
+            }
+        }
+        if (allOK) {
+            this.logger.debug(`All plugins appear to be running OK (i.e. i\'ve heard from them in the last ${watchdogTimeout} seconds)`);
+        }
+        this.logger.debug('\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-');
     }
 
     shutdown() {
