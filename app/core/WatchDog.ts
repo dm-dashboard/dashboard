@@ -4,8 +4,8 @@ import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as moment from 'moment';
 
-const watchdogTimeout = 5;
-const checkInterval = 10;
+const watchdogTimeout = 10 * 60;
+const checkInterval = 30;
 
 export interface IWatchdogKicker {
     (): void;

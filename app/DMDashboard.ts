@@ -55,10 +55,8 @@ export class DMDashboard {
             this.logger.error(error);
             return;
         }
-
-
-
     }
+
 
     shutdown(): Promise<any> {
         return new Promise((resolve) => {
