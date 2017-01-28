@@ -4,7 +4,12 @@ import { DMDashboard } from './DMDashboard';
 let dashboard = new DMDashboard();
 
 process.on('SIGTERM', function () {
-    console.log('SIG');
+    console.log('Process Terminated');
+    dashboard.shutdown()
+        .then(() => process.exit(0));
+});
+
+process.on('SIGINT', function () {
     dashboard.shutdown()
         .then(() => process.exit(0));
 });
