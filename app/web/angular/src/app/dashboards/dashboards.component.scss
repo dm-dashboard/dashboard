@@ -1,0 +1,21 @@
+@import '~variables.scss';
+
+:host {
+    width : 100%;
+    height : 100%;
+    padding:10px;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    height : 100%;
+    .list {
+        width:20%;
+        border-right: 2px solid $primary;
+    } 
+    .active {
+        padding : 0 0 0 10px;
+    }   
+}

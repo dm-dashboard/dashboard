@@ -11,9 +11,15 @@ import { DashboardsComponent } from './dashboards/dashboards.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ClientsComponent } from './clients/clients.component';
 import { UsersComponent } from './users/users.component';
-import { ProfileComponent } from './profile/profile.component';
+import { MyProfileComponent } from './my-profile/profile.component';
 import { PluginsComponent } from './plugins/plugins.component';
 import { BroadcastsComponent } from './broadcasts/broadcasts.component';
+
+import {GridsterModule} from 'angular2gridster';
+import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
+
+import { DashboardService } from './dashboard.service';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -21,18 +27,21 @@ import { BroadcastsComponent } from './broadcasts/broadcasts.component';
     DashboardsComponent,
     ClientsComponent,
     UsersComponent,
-    ProfileComponent,
+    MyProfileComponent,
     PluginsComponent,
-    BroadcastsComponent
+    BroadcastsComponent,
+    EditDashboardComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GridsterModule
   ],
-  providers: [],
+  providers: [DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

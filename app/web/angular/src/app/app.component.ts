@@ -18,7 +18,12 @@ export class AppComponent implements OnInit {
   }
 
   extractSectionName(routerState: RouterStateSnapshot | RouterState): string {
-    return ((routerState.root.children[0].component) as Function).name.replace('Component', '');
+    const componentName = ((routerState.root.children[0].component) as Function).name.replace('Component', '');
+    return componentName.replace(/([A-Z])+/g, ' $1').trim();
+  }
+
+  closeMenu(menu) {
+    menu.close();
   }
 
   ngOnInit() {

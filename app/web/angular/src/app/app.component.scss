@@ -7,11 +7,12 @@
 
 .sidenav-content {
   display: flex;
-  height: 100%;
+  height: calc(100% - 80px);
   width:100%;
   margin:0;
   align-items: center;
   justify-content: center;
+  margin-top:70px;
 }
 
 .sidenav {
@@ -34,12 +35,8 @@
         height : 100%;
         display: flex;
         flex-direction: column;
-    }
-  
+    } 
 }  
-
-
-
 
 .app-menu {
     position: fixed;

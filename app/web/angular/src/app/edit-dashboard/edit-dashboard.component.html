@@ -1,0 +1,12 @@
+<h3>Edit Dashboard</h3>
+<dmd-loader [loading]="isLoading"></dmd-loader>
+<div *ngIf="!isLoading">
+  <md-input-container>
+    <input mdInput placeholder="Dashboard Name" [(ngModel)]="dashboard.name">
+  </md-input-container>
+  <gridster [options]="gridsterConfig">
+    <gridster-item *ngFor="let widget of dashboard.widgets" [x]="widget.x" [y]="widget.y" [w]="widget.w" [h]="widget.h">
+      Hello
+    </gridster-item>
+  </gridster>
+</div>

@@ -1,3 +1,16 @@
-<p>
-  dashboards works!
-</p>
+<div class="dashboard">
+  <div class="list">
+    <h3>Dashboards</h3>
+    <md-list>
+      
+      <md-list-item *ngFor="let dashboard of dashboards | async">
+        <button [routerLink]="[dashboard.id]" md-button class="icon-button">
+          <md-icon  md-list-avatar>dashboard</md-icon>{{dashboard.name}}
+          </button>
+      </md-list-item>
+    </md-list>
+  </div>
+  <div class="active">
+    <router-outlet></router-outlet>
+  </div>
+</div>

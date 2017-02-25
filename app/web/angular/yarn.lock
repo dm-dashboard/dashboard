@@ -69,6 +69,10 @@
     webpack-merge "^2.4.0"
     zone.js "^0.7.2"
 
+"@angular/common@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.2.4.tgz#0e798cce826ba304d3b29556527a1a531f407159"
+
 "@angular/common@^2.4.0":
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.8.tgz#e45a77a9d852c8e7135053ff38cf805435458c48"
@@ -81,17 +85,33 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
+"@angular/compiler@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.2.4.tgz#40e8db5f801939ddc1a163079dc71b3be81a06ae"
+
 "@angular/compiler@>=2.3.1 <5.0.0", "@angular/compiler@^2.4.0":
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.8.tgz#fa788fc8bed9f322b040af2b9a06a70991390e23"
+
+"@angular/core@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.2.4.tgz#d00d5cfc734fd610cbafc14eb0749c957f004aa9"
 
 "@angular/core@>=2.3.1 <5.0.0", "@angular/core@^2.4.0":
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.8.tgz#bf1a4fc324827516e6c3222047a9b2cbdaee6976"
 
+"@angular/forms@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.2.4.tgz#95f15ca1938879298ccc0ef8a3e9ef5e750e31ef"
+
 "@angular/forms@^2.4.0":
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.4.8.tgz#51512a801aaf3a1eba7bce2b22694537b93f047f"
+
+"@angular/http@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.2.4.tgz#ccfeb3f805e0628f6bb9efa129ef432d79548c63"
 
 "@angular/http@^2.4.0":
   version "2.4.8"
@@ -101,13 +121,25 @@
   version "2.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-beta.2.tgz#65ee8733990347b7518b7f42113e02e069dc109b"
 
+"@angular/platform-browser-dynamic@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.2.4.tgz#4895cc035ab393ec9e74e7684211a9209ea86825"
+
 "@angular/platform-browser-dynamic@^2.4.0":
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.4.8.tgz#86059fe930489d1ca0056a5aba0b4420414759f5"
 
+"@angular/platform-browser@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.2.4.tgz#6041e02c7ed62622c926060869506705f79fb5fb"
+
 "@angular/platform-browser@^2.4.0":
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.4.8.tgz#686bc82d9188e354181699640777237ed79122ed"
+
+"@angular/router@3.2.4":
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-3.2.4.tgz#dfec71ad072ec031364ba5d08bd6fe03fd5beadc"
 
 "@angular/router@^3.4.0":
   version "3.4.8"
@@ -214,6 +246,23 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular2gridster@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/angular2gridster/-/angular2gridster-0.3.1.tgz#c70c6d5196eb1af0570dae3580f6ab47188436d1"
+  dependencies:
+    "@angular/common" "2.2.4"
+    "@angular/compiler" "2.2.4"
+    "@angular/core" "2.2.4"
+    "@angular/forms" "2.2.4"
+    "@angular/http" "2.2.4"
+    "@angular/platform-browser" "2.2.4"
+    "@angular/platform-browser-dynamic" "2.2.4"
+    "@angular/router" "3.2.4"
+    core-js "^2.4.1"
+    rxjs "5.0.0-beta.12"
+    ts-helpers "^1.1.1"
+    zone.js "^0.6.23"
 
 ansi-align@^1.1.0:
   version "1.1.0"
@@ -4042,6 +4091,12 @@ rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
 
+rxjs@5.0.0-beta.12:
+  version "5.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-beta.12.tgz#cdfde2d8c4639d20ae7794bff8fddf32da7ad337"
+  dependencies:
+    symbol-observable "^1.0.1"
+
 rxjs@^5.0.1, rxjs@^5.1.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.2.0.tgz#db537de8767c05fa73721587a29e0085307d318b"
@@ -4598,6 +4653,10 @@ trim-newlines@^1.0.0:
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
+
+ts-helpers@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ts-helpers/-/ts-helpers-1.1.2.tgz#fc69be9f1f3baed01fb1a0ef8d4cfe748814d835"
 
 ts-node@~2.0.0:
   version "2.0.0"
@@ -5157,6 +5216,10 @@ yeast@0.1.2:
 yn@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-1.2.0.tgz#d237a4c533f279b2b89d3acac2db4b8c795e4a63"
+
+zone.js@^0.6.23:
+  version "0.6.26"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.6.26.tgz#067c13b8b80223a89b62e9dc82680f09762c4636"
 
 zone.js@^0.7.2, zone.js@^0.7.6:
   version "0.7.7"
