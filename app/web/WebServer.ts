@@ -1,9 +1,11 @@
-import { ILogger } from './AppLogger';
+import { ILogger } from '../core/AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as http from 'http';
+
+import { Home } from './routes/HomeRoute';
 
 export class WebServer {
 
@@ -12,6 +14,7 @@ export class WebServer {
 
     constructor(private config: Configuration, private logger: ILogger) {
         this.app = express();
+        this.app.set('view engine', 'pug');
         this.server = http.createServer(this.app);
     }
 
@@ -20,6 +23,18 @@ export class WebServer {
         this.server.listen(this.config.server.port);
         this.server.on('error', (error) => this.onError(error));
         this.server.on('listening', () => this.onListening());
+        this.routes();
+    }
+
+    private routes() {
+        let router: express.Router;
+        router = express.Router();
+
+        let home: Home = new Home();
+
+        router.get('/', home.index.bind(home.index));
+
+        this.app.use(router);
     }
 
     shutdown() {

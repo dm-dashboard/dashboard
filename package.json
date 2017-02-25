@@ -18,6 +18,7 @@
     "@types/mongodb": "^2.1.37",
     "@types/node": "^7.0.4",
     "@types/winston": "^2.2.0",
+    "pug": "^2.0.0-beta9",
     "tslint": "^4.4.1",
     "typescript": "^2.1.5"
   },

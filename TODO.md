@@ -1,3 +1,6 @@
+## Notes
+* https://github.com/nexe/nexe
+
 ## Bugs
 * When naming a new dashboard, it saves when I start typing. Also results in a dashboard with no pages  
 * iFrame with query string params

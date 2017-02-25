@@ -2,6 +2,7 @@ import { SettingsGetter, SettingsGetterFactory } from './SettingsGetter';
 import { Scheduler } from './Scheduler';
 import { AppLogger, ILogger } from './AppLogger';
 import { WatchDog } from './WatchDog';
+import { WebServer } from './../web/WebServer';
 import { MongoConnection } from './MongoConnection';
 import { Configuration } from '../config/Configuration';
 import { SocketManager } from './SocketManager';
@@ -18,7 +19,8 @@ export class PluginManager {
 
     constructor(private config: Configuration, private appLogger: AppLogger,
         private mongo: MongoConnection, private watchdog: WatchDog,
-        private scheduler: Scheduler, private socketManager: SocketManager) {
+        private scheduler: Scheduler, private socketManager: SocketManager, 
+        private webServer : WebServer) {
         let location = config.plugins.location;
         if (!location) {
             // tslint:disable-next-line:max-line-length

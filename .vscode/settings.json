@@ -2,7 +2,8 @@
 {
     // Configure glob patterns for excluding files and folders.
     "files.exclude": {
-        "bin": true
+        "bin": true,
+        "app/web/angular/**/*" : true
     }
 ,
 "typescript.check.workspaceVersion": false
