@@ -1,12 +1,12 @@
 <md-sidenav-container class="app-container">
   <md-sidenav #sidenav class="sidenav">
     <div class="buttons">
-      <button md-button class="icon-button active"><md-icon>dashboard</md-icon>Dashboards</button>
-      <button md-button class="icon-button"><md-icon>tv</md-icon>Connected Clients</button>
-      <button md-button class="icon-button"><md-icon>send</md-icon>Broadcasts</button>
-      <button md-button class="icon-button"><md-icon>extension</md-icon>Plugins</button>
-      <button md-button class="icon-button"><md-icon>people</md-icon>Users</button>
-      <button md-button class="icon-button bottom"><md-icon>person</md-icon>My Profile</button>
+      <button routerLinkActive="active" routerLink="/dashboards" md-button class="icon-button"><md-icon>dashboard</md-icon>Dashboards</button>
+      <button routerLinkActive="active" routerLink="/clients" md-button class="icon-button"><md-icon>tv</md-icon>Connected Clients</button>
+      <button routerLinkActive="active" routerLink="/broadcasts" md-button class="icon-button"><md-icon>send</md-icon>Broadcasts</button>
+      <button routerLinkActive="active" routerLink="/plugins" md-button class="icon-button"><md-icon>extension</md-icon>Plugins</button>
+      <button routerLinkActive="active" routerLink="/users" md-button class="icon-button"><md-icon>people</md-icon>Users</button>
+      <button routerLinkActive="active" routerLink="/profile" md-button class="icon-button bottom"><md-icon>person</md-icon>My Profile</button>
     </div>
   </md-sidenav>
 
@@ -15,9 +15,9 @@
       <md-icon>menu</md-icon>
     </button>
     <div class="navbar">
-      <div class="title">DM Dashboard Admin Console</div>
+      <div class="title">DM Dashboard Admin Console - {{section}}</div>
     </div>
-
+    <router-outlet></router-outlet>
   </div>
 
 </md-sidenav-container>
