@@ -1,3 +1,5 @@
+@import '~variables.scss';
+
 .app-container {
   width: 100%;
   height: 100%;  
@@ -53,12 +55,12 @@
     left:0;
     width:100%;
     height:70px;
-    background-color: purple;
+    background-color: $primary;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     .title {
         width:100%;
         line-height:70px;
-        font-size:40px;
+        font-size:25px;
         color:white;
     }
     padding-left: 100px;
