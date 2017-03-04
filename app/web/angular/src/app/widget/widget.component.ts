@@ -23,7 +23,7 @@ export class WidgetComponent implements OnInit {
   y: number;
 
   @Input()
-  gridSize: number;
+  gridSize: { width: number, height: number };
 
   constructor(
     private element: ElementRef,
