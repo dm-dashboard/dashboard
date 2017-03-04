@@ -1,12 +1,48 @@
 <h3>Edit Dashboard</h3>
 <dmd-loader [loading]="isLoading"></dmd-loader>
-<div *ngIf="!isLoading">
-  <md-input-container>
-    <input mdInput placeholder="Dashboard Name" [(ngModel)]="dashboard.name">
-  </md-input-container>
-  <gridster [options]="gridsterConfig">
+<md-input-container>
+  <input mdInput placeholder="Dashboard Name" [(ngModel)]="dashboard.name">
+</md-input-container>
+<div class="grid-container" *ngIf="!isLoading">
+
+  <!--<gridster [options]="gridsterConfig">
     <gridster-item *ngFor="let widget of dashboard.widgets" [x]="widget.x" [y]="widget.y" [w]="widget.w" [h]="widget.h">
-      Hello
+      {{widget.name}}
     </gridster-item>
+  </gridster>-->
+
+  <!--<div [ngGrid]="gridConfig">
+    <div *ngFor="let widget of dashboard.widgets" [(ngGridItem)]="widget.config">
+      <div class="title">{{widget.name}}</div>
+      <p>Blah</p>
+    </div>-->
+  <!--</div>-->
+
+  <gridster [options]="gridsterOptions" [draggableOptions]="gridsterDraggableOptions" (gridsterPositionChange)="logChanges($event)" #gridster>
+
+    <gridster-item *ngFor="let widget of widgets; let indx = index" [(x)]="widget.x" [(y)]="widget.y" [w]="widget.w" [h]="widget.h">
+
+      <div class="panel-heading">
+        <h5 class="panel-title">{{ widget.title }}</h5>
+      </div>
+
+      <div class="panel-body">
+        <p>
+          <button (click)="setWidth(widget, widget.w+1, $event)">width +</button>
+          <button (click)="setWidth(widget, widget.w-1, $event)">width -</button>
+          <button (click)="setHeight(widget, widget.h+1, $event)">height +</button>
+          <button (click)="setHeight(widget, widget.h-1, $event)">height -</button>
+        </p>
+        <p>
+          <button (click)="remove(indx,gridster)">remove</button>
+        </p>
+        <p>
+          Position (x,y): ({{widget.x}},{{widget.y}})
+        </p>
+        <p>{{ widget.content }}</p>
+      </div>
+
+    </gridster-item>
+
   </gridster>
 </div>

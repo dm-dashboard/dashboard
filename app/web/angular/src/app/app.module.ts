@@ -1,3 +1,6 @@
+import { WindowService } from './window.service';
+import { MoveService } from './move.service';
+import { ResizeService } from './resize.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +9,7 @@ import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { DashboardsComponent } from './dashboards/dashboards.component';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ClientsComponent } from './clients/clients.component';
@@ -15,23 +18,31 @@ import { MyProfileComponent } from './my-profile/profile.component';
 import { PluginsComponent } from './plugins/plugins.component';
 import { BroadcastsComponent } from './broadcasts/broadcasts.component';
 
-import {GridsterModule} from 'angular2gridster';
+ import { GridsterModule} from 'angular2gridster';
+//import { NgGridModule } from 'angular2-grid';
 import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
 
 import { DashboardService } from './dashboard.service';
 import { LoaderComponent } from './loader/loader.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WidgetComponent } from './widget/widget.component';
+import { AdminComponent } from './admin/admin.component';
+ 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardsComponent,
+    DashboardAdminComponent,
     ClientsComponent,
     UsersComponent,
     MyProfileComponent,
     PluginsComponent,
     BroadcastsComponent,
     EditDashboardComponent,
-    LoaderComponent
+    LoaderComponent,
+    DashboardComponent,
+    WidgetComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +51,9 @@ import { LoaderComponent } from './loader/loader.component';
     MaterialModule,
     AppRoutingModule,
     GridsterModule
+    //NgGridModule
   ],
-  providers: [DashboardService],
+  providers: [DashboardService, ResizeService, MoveService, WindowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

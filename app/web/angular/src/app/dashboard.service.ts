@@ -5,7 +5,10 @@ import { Widget } from './widget';
 
 @Injectable()
 export class DashboardService {
-  private dashboards: Dashboard[] = [new Dashboard(1, 'Duane', [new Widget(1, 1, 1, 1)])];
+  private dashboards: Dashboard[] = [new Dashboard(1, 'Duane', [
+    new Widget('teamcity', 1, 1, 1, 1),
+    new Widget('adtempus',50, 2, 1, 1)
+  ])];
 
   constructor() {
 

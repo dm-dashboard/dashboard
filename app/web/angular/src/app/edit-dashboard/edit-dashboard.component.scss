@@ -1,3 +1,31 @@
-gridster-item {
-    background-color:white;
+.grid-item {
+    background-color:red;
+}
+
+.grid-container {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+}
+
+
+.panel-heading {
+    border-bottom: 1px solid #F0F0F0;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    top: 0;
+}
+.panel-heading .panel-title {
+    padding: 10px;
+    margin: 0;
+}
+
+.panel-body {
+    overflow: auto;
+    padding: 0 10px 10px;
+    position: absolute;
+    top: 37px;
+    bottom: 0;
 }

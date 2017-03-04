@@ -4,11 +4,11 @@ import { DashboardService } from '../dashboard.service';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'dmd-dashboards',
-  templateUrl: './dashboards.component.html',
-  styleUrls: ['./dashboards.component.scss']
+  selector: 'dmd-dashboard-admin',
+  templateUrl: './dashboard-admin.component.html',
+  styleUrls: ['./dashboard-admin.component.scss']
 })
-export class DashboardsComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit {
   dashboards: Observable<Dashboard[]>;
 
   constructor(private dashboardService: DashboardService) { }

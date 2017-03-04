@@ -1,29 +1,36 @@
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardsComponent } from './dashboards/dashboards.component';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 import { ClientsComponent } from './clients/clients.component';
 import { BroadcastsComponent } from './broadcasts/broadcasts.component';
 import { PluginsComponent } from './plugins/plugins.component';
 import { UsersComponent } from './users/users.component';
 import { MyProfileComponent } from './my-profile/profile.component';
 import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
+import { AdminComponent } from "app/admin/admin.component";
 
 const routes: Routes = [
-    { path: '', redirectTo: '/dashboards', pathMatch: 'full' },
+    { path: '', component: DashboardComponent, pathMatch: 'full' },
     {
-        path: 'dashboards', component: DashboardsComponent,
-        children: [
+        path: 'admin', component: AdminComponent, children: [
+            { path: '', redirectTo: 'dashboards', pathMatch: 'full' },
             {
-                path: ':id',
-                component: EditDashboardComponent
-            }
+                path: 'dashboards', component: DashboardAdminComponent,
+                children: [
+                    {
+                        path: ':id',
+                        component: EditDashboardComponent
+                    }
+                ]
+            },
+            { path: 'clients', component: ClientsComponent },
+            { path: 'broadcasts', component: BroadcastsComponent },
+            { path: 'plugins', component: PluginsComponent },
+            { path: 'users', component: UsersComponent },
+            { path: 'profile', component: MyProfileComponent }
         ]
-    },
-    { path: 'clients', component: ClientsComponent },
-    { path: 'broadcasts', component: BroadcastsComponent },
-    { path: 'plugins', component: PluginsComponent },
-    { path: 'users', component: UsersComponent },
-    { path: 'profile', component: MyProfileComponent }
+    }
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
