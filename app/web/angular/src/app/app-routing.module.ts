@@ -8,10 +8,9 @@ import { PluginsComponent } from './plugins/plugins.component';
 import { UsersComponent } from './users/users.component';
 import { MyProfileComponent } from './my-profile/profile.component';
 import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
-import { AdminComponent } from "app/admin/admin.component";
+import { AdminComponent } from 'app/admin/admin.component';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent, pathMatch: 'full' },
     {
         path: 'admin', component: AdminComponent, children: [
             { path: '', redirectTo: 'dashboards', pathMatch: 'full' },
@@ -30,7 +29,10 @@ const routes: Routes = [
             { path: 'users', component: UsersComponent },
             { path: 'profile', component: MyProfileComponent }
         ]
-    }
+    },
+    { path: '', redirectTo: '/default', pathMatch: 'full' },
+    { path: ':id', component: DashboardComponent },
+    { path: '**', redirectTo: 'admin' }
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
