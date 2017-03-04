@@ -4,22 +4,22 @@ export class Widget {
 
     x: number;
     y: number;
-    w: number;
-    h: number;
+    width: number;
+    height: number;
 
     config: {};
 
-    constructor(name:string, x: number, y: number, w: number, h: number) {
+    constructor(name: string, x: number, y: number, w: number, h: number) {
         this.x = x;
         this.y = y;
-        this.w = w;
-        this.h = h;
+        this.width = w;
+        this.height = h;
         this.name = name;
 
         this.config = {
             col: this.x,
             row: this.y,
-            sizeX: this.w,
+            sizeX: this.width,
             sizeY: this.y
         };
     }

@@ -7,9 +7,9 @@ export class ResizeService {
   constructor() { }
 
 
-  initSize(element: ElementRef, width: number, height: number, gridSize: { width: number, height: number }) {
+  initSize(parentElement, element: ElementRef, width: number, height: number, gridSize: { width: number, height: number }) {
     const dom = element.nativeElement;
-    const parent = new BoxModel(dom.parentElement);
+    const parent = new BoxModel(parentElement);
 
     const gridWidth = (gridSize.width * parent.innerWidth);
     const gridHeight = (gridSize.height * parent.innerHeight);

@@ -5,9 +5,9 @@ import { Widget } from './widget';
 
 @Injectable()
 export class DashboardService {
-  private dashboards: Dashboard[] = [new Dashboard(1, 'Duane', [
-    new Widget('teamcity', 1, 1, 1, 1),
-    new Widget('adtempus',50, 2, 1, 1)
+  private dashboards: Dashboard[] = [new Dashboard(1, 'default', [
+    new Widget('teamcity', 0, 0, 10, 10),
+    new Widget('adtempus', 20, 0, 10, 1)
   ])];
 
   constructor() {
@@ -23,6 +23,12 @@ export class DashboardService {
   getById(id: number): Observable<Dashboard> {
     return Observable.of(
       this.dashboards.filter(dash => dash.id === id)[0]
+    );
+  }
+
+  getByName(name: string): Observable<Dashboard> {
+    return Observable.of(
+      this.dashboards.filter(dash => dash.name === name)[0]
     );
   }
 

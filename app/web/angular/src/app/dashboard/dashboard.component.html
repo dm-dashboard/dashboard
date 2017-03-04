@@ -1,5 +1,9 @@
-<dmd-widget [width]="20" [height]="5" [x]="0" [y]="0" [gridSize]="gridSize"></dmd-widget>
-<dmd-widget [width]="20" [height]="5" [x]="20" [y]="5" [gridSize]="gridSize"></dmd-widget>
-<dmd-widget [width]="40" [height]="5" [x]="0" [y]="10" [gridSize]="gridSize"></dmd-widget>
-<dmd-widget [width]="40" [height]="5" [x]="0" [y]="15" [gridSize]="gridSize"></dmd-widget>
-<dmd-widget [width]="40" [height]="2" [x]="0" [y]="20" [gridSize]="gridSize"></dmd-widget>
+<div *ngIf="dashboard | async">
+    <dmd-widget *ngFor="let widget of (dashboard | async).widgets" [widget]="widget" [gridSize]="gridSize" [dashboardElement]="element"></dmd-widget>
+</div>
+<div *ngIf="!(dashboard | async)" class="error">
+    <md-icon>error</md-icon>
+    <span>
+        Dashboard [{{name}}] does not exist. Click <a routerLink="/admin">here</a> to go to the dashboard admin
+    </span>
+</div>

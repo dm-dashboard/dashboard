@@ -2,6 +2,7 @@ import { WindowService } from '../window.service';
 import { ResizeService } from '../resize.service';
 import { MoveService } from '../move.service';
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Widget } from "app/widget";
 
 @Component({
   selector: 'dmd-widget',
@@ -9,21 +10,14 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
   styleUrls: ['./widget.component.scss']
 })
 export class WidgetComponent implements OnInit {
-
   @Input()
-  width: number;
-
-  @Input()
-  height: number;
-
-  @Input()
-  x: number;
-
-  @Input()
-  y: number;
+  widget: Widget;
 
   @Input()
   gridSize: { width: number, height: number };
+
+  @Input()
+  dashboardElement;
 
   constructor(
     private element: ElementRef,
@@ -38,8 +32,8 @@ export class WidgetComponent implements OnInit {
   }
 
   onResize() {
-    this.moveService.initPosition(this.element, this.x, this.y, this.gridSize);
-    this.resizeService.initSize(this.element, this.width, this.height, this.gridSize);
+    this.moveService.initPosition(this.dashboardElement, this.element, this.widget.x, this.widget.y, this.gridSize);
+    this.resizeService.initSize(this.dashboardElement, this.element, this.widget.width, this.widget.height, this.gridSize);
   }
 
 }

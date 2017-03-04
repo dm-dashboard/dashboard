@@ -31,7 +31,7 @@ const routes: Routes = [
         ]
     },
     { path: '', redirectTo: '/default', pathMatch: 'full' },
-    { path: ':id', component: DashboardComponent },
+    { path: ':name', component: DashboardComponent },
     { path: '**', redirectTo: 'admin' }
 ];
 @NgModule({

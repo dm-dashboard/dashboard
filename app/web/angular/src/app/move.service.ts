@@ -16,9 +16,9 @@ export class MoveService {
     element.style.setProperty('left', `${x}px`);
   }
 
-  initPosition(element: ElementRef, x: number, y: number, gridSize: { width: number, height: number }) {
+  initPosition(parentElement, element: ElementRef, x: number, y: number, gridSize: { width: number, height: number }) {
     const dom = element.nativeElement;
-    const parent = new BoxModel(dom.parentElement);
+    const parent = new BoxModel(parentElement);
 
     const gridWidth = (gridSize.width * parent.innerWidth);
     const gridHeight = (gridSize.height * parent.innerHeight);

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { DashboardService } from '../dashboard.service';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Dashboard } from 'app/dashboard';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'dmd-dashboard',
@@ -12,9 +16,25 @@ export class DashboardComponent implements OnInit {
     height: 1.0 / 22
   };
 
-  constructor() { }
+  dashboard: Observable<Dashboard>;
+  element;
+  name: string;
+
+  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, private domElement: ElementRef) {
+    this.element = domElement.nativeElement;
+    route.params
+      .subscribe(params => {
+        this.loadDashboard(params['name']);
+      });
+  }
 
   ngOnInit() {
+  }
+
+  loadDashboard(name: string) {
+    this.name = name;
+    this.dashboard = this.dashboardService
+      .getByName(name);
   }
 
 }
