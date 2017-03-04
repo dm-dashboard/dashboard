@@ -1,3 +1,4 @@
+import { MessageService } from '../message.service';
 import { DashboardService } from '../dashboard.service';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -20,12 +21,18 @@ export class DashboardComponent implements OnInit {
   element;
   name: string;
 
-  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, private domElement: ElementRef) {
+  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, private domElement: ElementRef,
+    private messageService: MessageService) {
     this.element = domElement.nativeElement;
     route.params
       .subscribe(params => {
         this.loadDashboard(params['name']);
       });
+
+    this.messageService.subscribe('message')
+      .subscribe(message => {
+        console.log(message);
+      })
   }
 
   ngOnInit() {

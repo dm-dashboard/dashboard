@@ -7,7 +7,7 @@ import { Widget } from './widget';
 export class DashboardService {
   private dashboards: Dashboard[] = [new Dashboard(1, 'default', [
     new Widget('teamcity', 0, 0, 10, 10),
-    new Widget('adtempus', 20, 0, 10, 1)
+    new Widget('adtempus', 20, 10, 10, 10)
   ])];
 
   constructor() {

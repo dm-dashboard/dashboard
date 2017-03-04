@@ -1,3 +1,4 @@
+import { MessageService } from './message.service';
 import { WindowService } from './window.service';
 import { MoveService } from './move.service';
 import { ResizeService } from './resize.service';
@@ -18,8 +19,6 @@ import { MyProfileComponent } from './my-profile/profile.component';
 import { PluginsComponent } from './plugins/plugins.component';
 import { BroadcastsComponent } from './broadcasts/broadcasts.component';
 
- import { GridsterModule} from 'angular2gridster';
-//import { NgGridModule } from 'angular2-grid';
 import { EditDashboardComponent } from './edit-dashboard/edit-dashboard.component';
 
 import { DashboardService } from './dashboard.service';
@@ -49,11 +48,9 @@ import { AdminComponent } from './admin/admin.component';
     FormsModule,
     HttpModule,
     MaterialModule,
-    AppRoutingModule,
-    GridsterModule
-    //NgGridModule
+    AppRoutingModule
   ],
-  providers: [DashboardService, ResizeService, MoveService, WindowService],
+  providers: [DashboardService, ResizeService, MoveService, WindowService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
