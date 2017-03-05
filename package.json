@@ -25,6 +25,7 @@
   "dependencies": {
     "@types/body-parser": "0.0.33",
     "@types/left-pad": "^1.1.0",
+    "@types/serve-static": "^1.7.31",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.0",
     "config": "^1.24.0",
@@ -34,6 +35,7 @@
     "mongodb": "^2.2.22",
     "morgan": "^1.7.0",
     "right-pad": "^1.0.1",
+    "serve-static": "^1.12.1",
     "winston": "^2.3.1",
     "winston-daily-rotate-file": "^1.4.3"
   }

@@ -1,9 +1,9 @@
 import { ILogger } from '../core/AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as http from 'http';
+import * as serveStatic from 'serve-static';
 
 import { Home } from './routes/HomeRoute';
 
@@ -14,7 +14,6 @@ export class WebServer {
 
     constructor(private config: Configuration, private logger: ILogger) {
         this.app = express();
-        this.app.set('view engine', 'pug');
         this.server = http.createServer(this.app);
     }
 
@@ -23,18 +22,9 @@ export class WebServer {
         this.server.listen(this.config.server.port);
         this.server.on('error', (error) => this.onError(error));
         this.server.on('listening', () => this.onListening());
-        this.routes();
-    }
 
-    private routes() {
-        let router: express.Router;
-        router = express.Router();
-
-        let home: Home = new Home();
-
-        router.get('/', home.index.bind(home.index));
-
-        this.app.use(router);
+        this.setupRewrite();
+        this.setupPipeline();
     }
 
     shutdown() {
@@ -42,7 +32,49 @@ export class WebServer {
         this.server.close();
     }
 
-    onError(error) {
+    private setupRewrite() {
+        let filesRegex = /^\/(.*\..*$)/;
+        let apiRegex = /^\/api\/(.*$)/;
+        let socketRegex = /^\/socket.io/;
+
+        this.app.use((req, res, next) => {
+            let fileMatch = filesRegex.exec(req.url);
+            if (fileMatch) {
+                req.url = `/app/${fileMatch[1]}`;
+            } else if (!apiRegex.test(req.url) && !socketRegex.test(req.url)) {
+                req.url = '/app/index.html';
+            }
+            next();
+        });
+    }
+
+    private setupPipeline() {
+        this.routeToFrontend();
+        this.routeToApi();
+    }
+
+    private routeToFrontend() {
+        let ngApp = this.config.server.frontendLocation
+            ? this.config.server.frontendLocation
+            : path.join(__dirname, '../../app/web/angular/dist');
+
+        this.logger.info(`Frontend app served from: ${ngApp}`);
+        this.app.use('/app', serveStatic(ngApp));
+    }
+
+    private routeToApi() {
+        this.logger.info('Configuring routes');
+        let router: express.Router;
+        router = express.Router();
+
+        let home: Home = new Home();
+
+        router.get('/api', home.index.bind(home.index));
+
+        this.app.use(router);
+    }
+
+    private onError(error) {
         if (error.syscall !== 'listen') {
             throw error;
         }
@@ -60,7 +92,7 @@ export class WebServer {
         }
     }
 
-    onListening() {
+    private onListening() {
         let addr = this.server.address();
         let bind = typeof addr === 'string'
             ? 'pipe ' + addr
@@ -68,4 +100,3 @@ export class WebServer {
         this.logger.info('Web server listening on ' + bind);
     }
 }
-

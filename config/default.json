@@ -2,7 +2,7 @@
     "plugins" : {
         "location" : "./dev-plugins",
         "enabled" : [
-            "teamcity"
+            //"teamcity"
         ]
     },
     "server": {

@@ -21,18 +21,31 @@ export class DashboardComponent implements OnInit {
   element;
   name: string;
 
-  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, private domElement: ElementRef,
-    private messageService: MessageService) {
+  constructor(private route: ActivatedRoute, private dashboardService: DashboardService,
+    private domElement: ElementRef, private messageService: MessageService) {
+
     this.element = domElement.nativeElement;
     route.params
       .subscribe(params => {
         this.loadDashboard(params['name']);
       });
 
-    this.messageService.subscribe('message')
+    this.messageService.subscribe('__system__')
       .subscribe(message => {
-        console.log(message);
-      })
+        switch (message.command) {
+          case 'refresh':
+            window.location.reload();
+            break;
+          case 'identify':
+          // $rootScope.$emit('identify', message.text);
+          // break;
+          case 'changeDashboard':
+            // setTimeout(function () {
+            //   location.path('dashboard/' + message.dashboardId)
+            // }, 100);
+            break;
+        }
+      });
   }
 
   ngOnInit() {
