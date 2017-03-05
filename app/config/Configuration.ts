@@ -5,7 +5,20 @@ import { ILoggingConfig } from './ILoggingConfig';
 import { IServerConfig } from './IServerConfig';
 import { IMongoConfig } from './IMongoConfig';
 
-export class Configuration {
+import { injectable } from 'inversify';
+
+export interface IConfiguration {
+    environment: string;
+    logging: ILoggingConfig;
+    server: IServerConfig;
+    mongo: IMongoConfig;
+    plugins: IPluginConfig;
+    get(key: string): any;
+
+}
+
+@injectable()
+export class Configuration implements IConfiguration {
     environment: string;
     logging: ILoggingConfig;
     server: IServerConfig;

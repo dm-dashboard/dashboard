@@ -1,20 +1,25 @@
+import { Symbols } from '../Symbols';
 import * as winston from 'winston';
-import { Configuration } from '../config/Configuration';
+import { IConfiguration } from '../config/Configuration';
 import * as winstonDailyRotate from 'winston-daily-rotate-file';
+import { injectable, inject } from 'inversify';
+
 const padFunction = require('right-pad');
 const tagWidth = 15;
 
 export interface ILogger {
+    fork(name: string): ILogger;
     info(message: string);
     error(message: string);
     debug(message: string, error?: any);
 }
 
+@injectable()
 export class AppLogger implements ILogger {
     private logger: winston.LoggerInstance;
     private coreTag = padFunction('core', tagWidth);
 
-    constructor(config: Configuration) {
+    constructor( @inject(Symbols.IConfiguration) config: IConfiguration) {
         let transports: winston.TransportInstance[] = [];
 
         if (config.logging.toConsole) {
@@ -58,7 +63,8 @@ export class AppLogger implements ILogger {
             },
             error(message: string, error?: any) {
                 parent.error(message, error, padFunction(name, tagWidth));
-            }
+            },
+            fork: (n: string) => this
         };
     }
 

@@ -1,5 +1,5 @@
-import {SettingsGetter} from './SettingsGetter';
-import {IWatchdogKicker} from './WatchDog';
+import { SettingsGetter } from './SettingsGetter';
+import { IWatchdogKicker } from './WatchDog';
 
 import { ILogger } from './AppLogger';
 import { MongoConnection } from './MongoConnection';
@@ -10,9 +10,6 @@ export interface IPlugin {
     name: string;
     defaultSettings: any;
 
-    new (socketManager: SocketManager, logger: ILogger, mongo: MongoConnection,
-        scheduler: Scheduler, watchdog: IWatchdogKicker): IPlugin;
-
-    init(settingsGetter: SettingsGetter);
+    init(logger: ILogger, settingsGetter: SettingsGetter);
     shutdown();
 }

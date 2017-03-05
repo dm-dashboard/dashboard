@@ -1,58 +1,65 @@
-import { SocketManager } from './core/SocketManager';
-import { PluginManager } from './core/PluginManager';
-import { WatchDog } from './core/WatchDog';
-import { Scheduler } from './core/Scheduler';
-import { Configuration } from './config/Configuration';
-import { AppLogger } from './core/AppLogger';
-import { WebServer } from './web/WebServer';
-import { MongoConnection } from './core/MongoConnection';
+import { Symbols } from './Symbols';
+import { ISocketManager, SocketManager } from './core/SocketManager';
+import { IPluginManager, PluginManager } from './core/PluginManager';
+import { IWatchDog, WatchDog } from './core/WatchDog';
+import { IScheduler, Scheduler } from './core/Scheduler';
+import { Configuration, IConfiguration } from './config/Configuration';
+import { ILogger } from './core/AppLogger';
+import { IWebServer } from './web/WebServer';
+import { IMongoConnection } from './core/MongoConnection';
+import { Container } from 'inversify';
+
 
 export class DMDashboard {
-    config: Configuration;
-    logger: AppLogger;
+    logger: ILogger;
     env: string;
-    webServer: WebServer;
-    mongo: MongoConnection;
-    scheduler: Scheduler;
-    watchDog: WatchDog;
-    pluginManager: PluginManager;
-    socketManager: SocketManager;
+    webServer: IWebServer;
+    mongo: IMongoConnection;
+    scheduler: IScheduler;
+    watchDog: IWatchDog;
+    pluginManager: IPluginManager;
+    socketManager: ISocketManager;
 
     constructor() {
-        this.config = new Configuration();
+
     }
 
-    start() {
+    start(container: Container) {
 
         try {
-            this.logger = new AppLogger(this.config);
-            this.logger.info(`DM-Dashboard starting up. Loading Settings for ENV=${this.config.environment}`);
-
-            this.mongo = new MongoConnection(this.config, this.logger.fork('mongo'));
-            this.mongo.connect()
+            let config = container.get<IConfiguration>(Symbols.IConfiguration);
+            this.logger = container.get<ILogger>(Symbols.ILogger);
+            this.logger.info(`DM-Dashboard starting up. Loading Settings for ENV=${config.environment}`);
+            this.mongo = container.get<IMongoConnection>(Symbols.IMongoConnection);
+            this.mongo.connect(this.logger.fork('mongo'))
                 .then(() => {
 
-                    this.webServer = new WebServer(this.config, this.logger.fork('express'));
-                    this.webServer.start();
+                    this.webServer = container.get<IWebServer>(Symbols.IWebServer);
+                    let httpServer = this.webServer.start(this.logger.fork('express'));
 
-                    this.scheduler = new Scheduler(this.config, this.logger.fork('scheduler'));
-                    this.watchDog = new WatchDog(this.config, this.logger.fork('watchdog'), this.scheduler);
-                    this.socketManager = new SocketManager(this.config, this.logger.fork('socket-manager'), this.webServer.server);
+                    this.scheduler = container.get<IScheduler>(Symbols.IScheduler);
+                    this.watchDog = container.get<IWatchDog>(Symbols.IWatchDog);
+                    this.socketManager = container.get<ISocketManager>(Symbols.ISocketManager);
+                    this.socketManager.listen(this.logger.fork('socket-manager'), httpServer);
 
-                    this.pluginManager = new PluginManager(this.config, this.logger, this.mongo,
-                        this.watchDog, this.scheduler, this.socketManager, this.webServer);
-                    this.pluginManager.load();
+                    this.pluginManager = container.get<IPluginManager>(Symbols.IPluginManager);
+                    this.pluginManager.load(this.logger.fork('plugin-manager'));
 
-                    this.watchDog.start(this.pluginManager);
+                    this.watchDog.start(this.logger.fork('watchdog'));
 
                     this.logger.info('All components started, kicking off scheduler');
-                    this.scheduler.start()
+                    this.scheduler.start(this.logger.fork('scheduler'))
                         .catch((error) => this.logger.error(error))
                         .then(() => this.shutdown());
                 });
         } catch (error) {
-            this.logger.error('Could not start up:');
-            this.logger.error(error);
+            if (this.logger) {
+                this.logger.error('Could not start up:');
+                this.logger.error(error.message || error);
+            } else {
+                console.error('Could not start up:');
+                console.error(error);
+            }
             return;
         }
     }

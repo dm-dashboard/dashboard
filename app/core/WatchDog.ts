@@ -1,8 +1,10 @@
+import { Symbols } from '../Symbols';
 import { PluginManager } from './PluginManager';
 import { Scheduler } from './Scheduler';
 import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as moment from 'moment';
+import { inject, injectable } from 'inversify';
 
 const watchdogTimeout = 10 * 60;
 const checkInterval = 30;
@@ -11,18 +13,25 @@ export interface IWatchdogKicker {
     (): void;
 }
 
-export class WatchDog {
+export interface IWatchDog {
+    start(logger: ILogger);
+    registerPlugin(name: string): IWatchdogKicker;
+    shutdown();
+}
+
+@injectable()
+export class WatchDog implements IWatchDog {
+    private logger: ILogger;
     private lastKicks: Map<string, moment.Moment> = new Map();
-    private pluginManager: PluginManager;
 
-    constructor(private config: Configuration, private logger: ILogger,
-        private scheduler: Scheduler) {
-
+    constructor( @inject(Symbols.IConfiguration) private config: Configuration,
+        @inject(Symbols.IScheduler) private scheduler: Scheduler,
+        @inject(Symbols.IPluginManager) private pluginManager: PluginManager) {
     }
 
-    start(pluginManager: PluginManager) {
+    start(logger: ILogger) {
+        this.logger = logger;
         this.scheduler.registerCallback(() => this.checkForDeadPlugins(), this, checkInterval * 1000);
-        this.pluginManager = pluginManager;
     }
 
     registerPlugin(name: string): IWatchdogKicker {

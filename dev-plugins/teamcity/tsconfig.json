@@ -4,13 +4,13 @@
         "noImplicitAny": false,
         "removeComments": true,
         "preserveConstEnums": true,
-        "outDir": "./bin",
+        "outDir": ".",
         "target" : "es6",
         "sourceMap": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true        
     },
     "files": [
-        "app/index.ts"        
+        "plugin.ts"
     ]
 }
