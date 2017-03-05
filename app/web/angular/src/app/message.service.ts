@@ -1,10 +1,11 @@
+import { environment } from '../environments/environment';
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MessageService {
-  private url = 'http://duanemcki-pc:3000';
+  private url = environment.serverUrl;
   private socket;
 
   rooms: { [index: string]: Observable<any> } = {};

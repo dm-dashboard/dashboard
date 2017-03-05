@@ -4,6 +4,8 @@ import * as express from 'express';
 import * as path from 'path';
 import * as http from 'http';
 import * as serveStatic from 'serve-static';
+import * as cors from 'cors';
+import * as socketIO from 'socket.io';
 
 import { Home } from './routes/HomeRoute';
 
@@ -11,6 +13,7 @@ export class WebServer {
 
     private server: http.Server;
     private app: express.Application;
+    private socketIOServer: SocketIO.Server;
 
     constructor(private config: Configuration, private logger: ILogger) {
         this.app = express();
@@ -23,13 +26,30 @@ export class WebServer {
         this.server.on('error', (error) => this.onError(error));
         this.server.on('listening', () => this.onListening());
 
+        this.enableDebugCors();
         this.setupRewrite();
         this.setupPipeline();
+        this.enableSocket();
     }
 
     shutdown() {
         this.logger.info('Shutting down');
         this.server.close();
+    }
+
+    private enableSocket() {
+        this.logger.info('Opening Socket');
+        this.socketIOServer = socketIO(this.server);
+        this.socketIOServer.on('connection', (connection) => {
+            this.logger.debug('New socket connection');
+        });
+    }
+
+    private enableDebugCors() {
+        let corsOptions = {
+            origin: 'http://localhost:4200'
+        };
+        this.app.use(cors(corsOptions));
     }
 
     private setupRewrite() {

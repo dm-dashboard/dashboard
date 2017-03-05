@@ -1,6 +1,6 @@
 import { MessageService } from '../message.service';
 import { DashboardService } from '../dashboard.service';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Dashboard } from 'app/dashboard';
 import { Observable } from 'rxjs/Observable';
@@ -10,7 +10,8 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+
 
   gridSize = {
     width: 1.0 / 40,
@@ -50,6 +51,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngOnDestroy(): void {
+    this.messageService.disconnect();
+  }
+
 
   loadDashboard(name: string) {
     this.name = name;
