@@ -5,15 +5,14 @@ import * as path from 'path';
 import * as http from 'http';
 import * as serveStatic from 'serve-static';
 import * as cors from 'cors';
-import * as socketIO from 'socket.io';
 
 import { Home } from './routes/HomeRoute';
 
-export class WebServer {
+const NG_APP_ROUTE = '/app';
 
-    private server: http.Server;
+export class WebServer {
     private app: express.Application;
-    private socketIOServer: SocketIO.Server;
+    server: http.Server;
 
     constructor(private config: Configuration, private logger: ILogger) {
         this.app = express();
@@ -29,20 +28,11 @@ export class WebServer {
         this.enableDebugCors();
         this.setupRewrite();
         this.setupPipeline();
-        this.enableSocket();
     }
 
     shutdown() {
         this.logger.info('Shutting down');
         this.server.close();
-    }
-
-    private enableSocket() {
-        this.logger.info('Opening Socket');
-        this.socketIOServer = socketIO(this.server);
-        this.socketIOServer.on('connection', (connection) => {
-            this.logger.debug('New socket connection');
-        });
     }
 
     private enableDebugCors() {
@@ -60,9 +50,9 @@ export class WebServer {
         this.app.use((req, res, next) => {
             let fileMatch = filesRegex.exec(req.url);
             if (fileMatch) {
-                req.url = `/app/${fileMatch[1]}`;
+                req.url = `${NG_APP_ROUTE}/${fileMatch[1]}`;
             } else if (!apiRegex.test(req.url) && !socketRegex.test(req.url)) {
-                req.url = '/app/index.html';
+                req.url = `${NG_APP_ROUTE}/index.html`;
             }
             next();
         });
@@ -79,7 +69,7 @@ export class WebServer {
             : path.join(__dirname, '../../app/web/angular/dist');
 
         this.logger.info(`Frontend app served from: ${ngApp}`);
-        this.app.use('/app', serveStatic(ngApp));
+        this.app.use(NG_APP_ROUTE, serveStatic(ngApp));
     }
 
     private routeToApi() {

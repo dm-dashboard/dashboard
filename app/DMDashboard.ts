@@ -37,7 +37,7 @@ export class DMDashboard {
 
                     this.scheduler = new Scheduler(this.config, this.logger.fork('scheduler'));
                     this.watchDog = new WatchDog(this.config, this.logger.fork('watchdog'), this.scheduler);
-                    this.socketManager = new SocketManager(this.config, this.logger.fork('socket-manager'));
+                    this.socketManager = new SocketManager(this.config, this.logger.fork('socket-manager'), this.webServer.server);
 
                     this.pluginManager = new PluginManager(this.config, this.logger, this.mongo,
                         this.watchDog, this.scheduler, this.socketManager, this.webServer);
