@@ -720,6 +720,10 @@ ini@~1.3.0:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
 
+injection-js@^2.0.0-rc.2:
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/injection-js/-/injection-js-2.0.0-rc.2.tgz#825a2e465c5c1e455ea0449b5ac47544ab55b24c"
+
 inversify@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/inversify/-/inversify-3.1.0.tgz#820571ddf52e7d8f875a5de15de3468319b86f80"

@@ -1,4 +1,3 @@
-import { Symbols } from '../Symbols';
 import { ILogger } from '../core/AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as express from 'express';
@@ -8,22 +7,18 @@ import * as serveStatic from 'serve-static';
 import * as cors from 'cors';
 
 import { Home } from './routes/HomeRoute';
-import { inject, injectable } from 'inversify';
+import { Injectable } from 'injection-js';
 
 const NG_APP_ROUTE = '/app';
 
-export interface IWebServer {
-    start(logger: ILogger) : http.Server;
-    shutdown();
-}
 
-@injectable()
-export class WebServer implements IWebServer {
+@Injectable()
+export class WebServer {
     private app: express.Application;
     private logger: ILogger;
     server: http.Server;
 
-    constructor( @inject(Symbols.IConfiguration) private config: Configuration) {
+    constructor(private config: Configuration) {
         this.app = express();
         this.server = http.createServer(this.app);
     }

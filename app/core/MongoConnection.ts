@@ -1,22 +1,15 @@
-import { Symbols } from '../Symbols';
 import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 import { Collection, Db, MongoClient } from 'mongodb';
-import { inject, injectable } from 'inversify';
+import { Injectable } from 'injection-js';
 
-export interface IMongoConnection {
-    connect(logger: ILogger): Promise<any>;
-    getCollection(collectionName: string): Collection;
-    close();
-}
-
-@injectable()
-export class MongoConnection implements IMongoConnection {
+@Injectable()
+export class MongoConnection {
 
     private database: Db;
     private logger: ILogger;
 
-    constructor( @inject(Symbols.IConfiguration) private config: Configuration) {
+    constructor( private config: Configuration) {
 
     }
 

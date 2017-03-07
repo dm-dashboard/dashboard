@@ -1,7 +1,6 @@
-import { Symbols } from '../Symbols';
 import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
-import { inject, injectable } from 'inversify';
+import { Injectable } from 'injection-js';
 
 class ScheduledItem {
 
@@ -21,18 +20,13 @@ class ScheduledItem {
     }
 }
 
-export interface IScheduler {
-    start(logger: ILogger): Promise<any>;
-    registerCallback(callback: () => void, context: any, interval: number);
-    shutdown();
-}
 
-@injectable()
-export class Scheduler implements IScheduler {
+@Injectable()
+export class Scheduler {
     private schedule: ScheduledItem[] = [];
     private logger: ILogger;
 
-    constructor( @inject(Symbols.IConfiguration)private config: Configuration) {
+    constructor(private config: Configuration) {
 
     }
 

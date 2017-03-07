@@ -1,21 +1,15 @@
-import { Symbols } from '../Symbols';
 import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as socketIO from 'socket.io';
 import * as http from 'http';
-import { injectable, inject } from 'inversify';
+import { Injectable } from 'injection-js';
 
-export interface ISocketManager {
-    listen(logger: ILogger, server: http.Server);
-    shutdown();
-}
-
-@injectable()
-export class SocketManager implements ISocketManager {
+@Injectable()
+export class SocketManager {
     private socketIOServer: SocketIO.Server;
     private logger: ILogger;
 
-    constructor(@inject(Symbols.IConfiguration) private config: Configuration) {
+    constructor(private config: Configuration) {
 
     }
 

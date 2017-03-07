@@ -1,48 +1,46 @@
-import { Symbols } from './Symbols';
-import { ISocketManager, SocketManager } from './core/SocketManager';
-import { IPluginManager, PluginManager } from './core/PluginManager';
-import { IWatchDog, WatchDog } from './core/WatchDog';
-import { IScheduler, Scheduler } from './core/Scheduler';
-import { Configuration, IConfiguration } from './config/Configuration';
-import { ILogger } from './core/AppLogger';
-import { IWebServer } from './web/WebServer';
-import { IMongoConnection } from './core/MongoConnection';
-import { Container } from 'inversify';
-
+import { SocketManager } from './core/SocketManager';
+import { PluginManager } from './core/PluginManager';
+import { WatchDog } from './core/WatchDog';
+import { Scheduler } from './core/Scheduler';
+import { Configuration } from './config/Configuration';
+import { AppLogger } from './core/AppLogger';
+import { WebServer } from './web/WebServer';
+import { MongoConnection } from './core/MongoConnection';
+import { ReflectiveInjector } from 'injection-js';
 
 export class DMDashboard {
-    logger: ILogger;
+    logger: AppLogger;
     env: string;
-    webServer: IWebServer;
-    mongo: IMongoConnection;
-    scheduler: IScheduler;
-    watchDog: IWatchDog;
-    pluginManager: IPluginManager;
-    socketManager: ISocketManager;
+    webServer: WebServer;
+    mongo: MongoConnection;
+    scheduler: Scheduler;
+    watchDog: WatchDog;
+    pluginManager: PluginManager;
+    socketManager: SocketManager;
 
     constructor() {
 
     }
 
-    start(container: Container) {
+    start(container: ReflectiveInjector) {
 
         try {
-            let config = container.get<IConfiguration>(Symbols.IConfiguration);
-            this.logger = container.get<ILogger>(Symbols.ILogger);
+            let config = container.get(Configuration);
+            this.logger = container.get(AppLogger);
             this.logger.info(`DM-Dashboard starting up. Loading Settings for ENV=${config.environment}`);
-            this.mongo = container.get<IMongoConnection>(Symbols.IMongoConnection);
+            this.mongo = container.get(MongoConnection);
             this.mongo.connect(this.logger.fork('mongo'))
                 .then(() => {
 
-                    this.webServer = container.get<IWebServer>(Symbols.IWebServer);
+                    this.webServer = container.get(WebServer);
                     let httpServer = this.webServer.start(this.logger.fork('express'));
 
-                    this.scheduler = container.get<IScheduler>(Symbols.IScheduler);
-                    this.watchDog = container.get<IWatchDog>(Symbols.IWatchDog);
-                    this.socketManager = container.get<ISocketManager>(Symbols.ISocketManager);
+                    this.scheduler = container.get(Scheduler);
+                    this.watchDog = container.get(WatchDog);
+                    this.socketManager = container.get(SocketManager);
                     this.socketManager.listen(this.logger.fork('socket-manager'), httpServer);
 
-                    this.pluginManager = container.get<IPluginManager>(Symbols.IPluginManager);
+                    this.pluginManager = container.get(PluginManager);
                     this.pluginManager.load(this.logger.fork('plugin-manager'));
 
                     this.watchDog.start(this.logger.fork('watchdog'));

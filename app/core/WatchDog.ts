@@ -1,10 +1,9 @@
-import { Symbols } from '../Symbols';
 import { PluginManager } from './PluginManager';
 import { Scheduler } from './Scheduler';
 import { ILogger } from './AppLogger';
 import { Configuration } from '../config/Configuration';
 import * as moment from 'moment';
-import { inject, injectable } from 'inversify';
+import { Injectable } from 'injection-js';
 
 const watchdogTimeout = 10 * 60;
 const checkInterval = 30;
@@ -13,20 +12,14 @@ export interface IWatchdogKicker {
     (): void;
 }
 
-export interface IWatchDog {
-    start(logger: ILogger);
-    registerPlugin(name: string): IWatchdogKicker;
-    shutdown();
-}
-
-@injectable()
-export class WatchDog implements IWatchDog {
+@Injectable()
+export class WatchDog implements WatchDog {
     private logger: ILogger;
     private lastKicks: Map<string, moment.Moment> = new Map();
 
-    constructor( @inject(Symbols.IConfiguration) private config: Configuration,
-        @inject(Symbols.IScheduler) private scheduler: Scheduler,
-        @inject(Symbols.IPluginManager) private pluginManager: PluginManager) {
+    constructor(private config: Configuration,
+        private scheduler: Scheduler,
+        private pluginManager: PluginManager) {
     }
 
     start(logger: ILogger) {

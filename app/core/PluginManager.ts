@@ -1,4 +1,3 @@
-import { Symbols } from '../Symbols';
 import { SettingsGetter, SettingsGetterFactory } from './SettingsGetter';
 import { Scheduler } from './Scheduler';
 import { AppLogger, ILogger } from './AppLogger';
@@ -6,25 +5,24 @@ import { WatchDog } from './WatchDog';
 import { WebServer } from './../web/WebServer';
 import { MongoConnection } from './MongoConnection';
 import { Configuration } from '../config/Configuration';
-import { SocketManager } from './SocketManager';
 import { IPlugin } from './IPlugin';
 import * as path from 'path';
 import * as fs from 'fs';
-import { inject, injectable } from 'inversify';
+import { Injectable } from 'injection-js';
 
 export interface IPluginManager {
     load(logger: ILogger);
     shutdown();
 }
 
-@injectable()
+@Injectable()
 export class PluginManager implements IPluginManager {
 
     private loadedPlugins: Map<string, IPlugin> = new Map();
     private logger: ILogger;
     private settingsGetterFactory: SettingsGetterFactory;
 
-    constructor( @inject(Symbols.IConfiguration) private config: Configuration) {
+    constructor(private config: Configuration) {
         let location = config.plugins.location;
         if (!location) {
             // tslint:disable-next-line:max-line-length
